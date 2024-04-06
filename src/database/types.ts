@@ -1,4 +1,5 @@
 export type DataOptions = {
     all: boolean,
-    uuid: string
+    uuid: string,
+    fromPlanet: boolean
 }

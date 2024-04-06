@@ -15,6 +15,9 @@ export class SpaceShips {
         if (commandHandler.data.options.all) {
             response = await SpaceShipSchema.find({});
         }
+        else if (commandHandler.data.options.fromPlanet && commandHandler.data.options.uuid) {
+            response = await SpaceShipSchema.find({ celestialOrbiting: commandHandler.data.options.uuid });
+        }
         else if (commandHandler.data.options.uuid) {
             response = await SpaceShipSchema.find({ uuid: commandHandler.data.options.uuid });
         }
