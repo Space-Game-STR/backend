@@ -40,8 +40,8 @@ const queryBackend = async (query: string): Promise<boolean> => {
         });
 
         client.on("close", (hadError) => {
-            console.log("closing");
             client.end();
+            resolve(false);
         })
     })
 }
@@ -51,7 +51,7 @@ const askForInput = () => {
     rl.question("", async (input) => {
         switch (input) {
             case '0': await queryBackend('ping'); break;
-            case '1': await queryBackend('get celestials {}'); break;
+            case '1': await queryBackend('get celestials {"object": {}, "options": {}}'); break;
             case '2': await queryBackend('get spaceships {}'); break;
             case '3': return rl.close();
         }

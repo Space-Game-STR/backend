@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 
 export interface ISpaceship {
-    uuid: string,
+    uuid?: string,
     name: string,
     orbitingCelestial: boolean,
     celestialOrbiting: string,

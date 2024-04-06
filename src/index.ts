@@ -25,9 +25,16 @@ server.on('connection', (sock) => {
 
     sock.on('data', async (data) => {
         console.log(sock.remoteAddress + ": " + data);
-        const commandHandler = new CommandHandler(String(data));
-        const response = await commandHandler.handleCommand();
-        sock.write(response);
+        try {
+            const commandHandler = new CommandHandler(String(data));
+            const response = await commandHandler.handleCommand();
+            const responseString = JSON.stringify(response);
+            sock.write(responseString);
+        } catch (e) {
+            if (typeof e === "string") sock.write(e);
+            else console.error(e);
+        }
+
         sock.end();
     });
 

@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose"
 
 export interface ICelestial {
-    uuid: string,
+    uuid?: string,
     radius: number,
     angle: number,
     distanceFromSun: number
