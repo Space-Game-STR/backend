@@ -4,7 +4,7 @@ export interface ISpaceship {
     uuid?: string,
     name: string,
     orbitingCelestial: boolean,
-    celestialOrbiting: string,
+    celestialOrbiting?: string,
     currentJourney: string,
     velocity: number
 }
@@ -27,8 +27,7 @@ const spaceShipSchema = new Schema<ISpaceship>({
         required: true
     },
     currentJourney: {
-        type: String,
-        required: true
+        type: String
     },
     velocity: {
         type: Number,

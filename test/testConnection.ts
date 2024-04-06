@@ -18,7 +18,8 @@ const optionsMenu = () => {
     console.log("1.- get all celestials");
     console.log("2.- get all spaceships");
     console.log("3.- create new celestial");
-    console.log("4.- exit");
+    console.log("4.- create new spaceship");
+    console.log("5.- exit");
 }
 
 const queryBackend = async (query: string): Promise<boolean> => {
@@ -55,7 +56,8 @@ const askForInput = () => {
             case '1': await queryBackend('get celestials {"object": {}, "options": {}}'); break;
             case '2': await queryBackend('get spaceships {}'); break;
             case '3': await queryBackend('create celestial {"object": {"radius": 1, "distanceFromSun": 10, "angle": 278}, "options": {}}'); break;
-            case '4': return rl.close();
+            case '4': await queryBackend('create spaceship {"object": {"name": "GUH", "orbitingCelestial": true, "celestialOrbiting": "caef83aa-ca14-4bb0-9026-955a1d494532", "currentJourney": "", "velocity": 1}, "options": {}}'); break;
+            case '5': return rl.close();
         }
         askForInput();
     });

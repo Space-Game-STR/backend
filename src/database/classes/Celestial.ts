@@ -40,4 +40,10 @@ export class Celestials {
 
         return new Response(1, JSON.stringify(celestialObject));
     }
+
+    static async exists(uuid: string): Promise<boolean> {
+        const exists = await CelestialSchema.find({ uuid });
+
+        return exists.length == 1;
+    }
 }

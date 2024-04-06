@@ -13,6 +13,7 @@ export const getCommand = async (commandHandler: CommandHandler): Promise<Respon
 export const createCommand = async (commandHandler: CommandHandler): Promise<Response> => {
     switch (commandHandler.objectType) {
         case "celestial": return await Celestials.createCelestial(commandHandler);
+        case "spaceship": return await SpaceShips.createSpaceShip(commandHandler);
         default: return new Response(2, "ObjectType not found");
     }
 }
