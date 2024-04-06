@@ -1,5 +1,10 @@
 import { CommandHandler, Response } from "../../CommandHandler";
 import { CelestialSchema, ICelestial } from "../schemas/Celestial";
+import { v4 as uuidv4 } from 'uuid';
+
+const instanceOfCelestial = (object: any): object is ICelestial => {
+    return 'radius' in object && 'angle' in object && 'distanceFromSun' in object;
+}
 
 export class Celestials {
     static async getCelestials(commandHandler: CommandHandler): Promise<Response> {
@@ -18,8 +23,17 @@ export class Celestials {
 
     static async createCelestial(commandHandler: CommandHandler): Promise<Response> {
 
+        if (!instanceOfCelestial(commandHandler.data)) throw "Data does not contain a celestial";
 
-        //const celestial: ICelestial = 
-        return new Response(3, "Not implemented yet");
+        const celestial: ICelestial = {
+            uuid: uuidv4(),
+            angle: commandHandler.data.angle,
+            radius: commandHandler.data.radius,
+            distanceFromSun: commandHandler.data.distanceFromSun,
+        };
+
+        const celestialObject = await CelestialSchema.create(celestial);
+
+        return new Response(1, JSON.stringify(celestialObject));
     }
 }
