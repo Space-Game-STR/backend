@@ -1,3 +1,4 @@
 export type DataOptions = {
-    all: boolean
+    all: boolean,
+    uuid: string
 }

@@ -14,6 +14,10 @@ export class Celestials {
             response = await CelestialSchema.find({});
         }
 
+        if (!commandHandler.data.options.all && commandHandler.data.options.uuid) {
+            response = await CelestialSchema.findOne({ uuid: commandHandler.data.options.uuid });
+        }
+
         if (response === undefined) {
             return new Response(2, "Could not find celestials by the options/data sent.")
         }
