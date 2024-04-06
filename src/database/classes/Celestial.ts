@@ -27,13 +27,13 @@ export class Celestials {
 
     static async createCelestial(commandHandler: CommandHandler): Promise<Response> {
 
-        if (!instanceOfCelestial(commandHandler.data)) throw "Data does not contain a celestial";
+        if (!instanceOfCelestial(commandHandler.data.object)) throw "Data does not contain a celestial. It has to have [radius, angle, distanceFromSun]";
 
         const celestial: ICelestial = {
             uuid: uuidv4(),
-            angle: commandHandler.data.angle,
-            radius: commandHandler.data.radius,
-            distanceFromSun: commandHandler.data.distanceFromSun,
+            angle: commandHandler.data.object.angle,
+            radius: commandHandler.data.object.radius,
+            distanceFromSun: commandHandler.data.object.distanceFromSun,
         };
 
         const celestialObject = await CelestialSchema.create(celestial);

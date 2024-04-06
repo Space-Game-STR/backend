@@ -10,9 +10,9 @@ export const getCommand = async (commandHandler: CommandHandler): Promise<Respon
     }
 }
 
-export const createCommand = async (commandHandler: CommandHandler) => {
+export const createCommand = async (commandHandler: CommandHandler): Promise<Response> => {
     switch (commandHandler.objectType) {
         case "celestial": return await Celestials.createCelestial(commandHandler);
-        default: return "ObjectType not found";
+        default: return new Response(2, "ObjectType not found");
     }
 }

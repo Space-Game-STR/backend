@@ -1,4 +1,4 @@
-import { getCommand } from "./Handlers";
+import { createCommand, getCommand } from "./Handlers";
 import { ICelestial } from "./database/schemas/Celestial";
 import { ISpaceship } from "./database/schemas/Spaceship";
 import { DataOptions } from "./database/types";
@@ -20,7 +20,7 @@ export class CommandHandler {
     async handleCommand(): Promise<Response> {
         switch (this.command) {
             case 'get': return getCommand(this);
-            case 'create': return new Response(3, "CREATE Command");
+            case 'create': return createCommand(this);
             case 'update': return new Response(3, "UPDATE Command");
             case 'ping': return new Response(3, "PONG");
             default: return new Response(2, "Command not recognized");
