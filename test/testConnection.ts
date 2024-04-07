@@ -18,9 +18,10 @@ const optionsMenu = () => {
     console.log("1.- get all celestials");
     console.log("2.- get all spaceships");
     console.log("3.- get all spaceships of celestial");
-    console.log("4.- create new celestial");
-    console.log("5.- create new spaceship");
-    console.log("6.- exit");
+    console.log("4.- get all journeys");
+    console.log("5.- create new celestial");
+    console.log("6.- create new spaceship");
+    console.log("7.- exit");
 }
 
 const queryBackend = async (query: string): Promise<boolean> => {
@@ -57,9 +58,10 @@ const askForInput = () => {
             case '1': await queryBackend('get celestials {"object": {}, "options": {"all": true}}'); break;
             case '2': await queryBackend('get spaceships {"object": {}, "options": {"all": true}}'); break;
             case '3': await queryBackend('get spaceships {"object": {}, "options": {"all": false, "fromPlanet": true, "uuid": "caef83aa-ca14-4bb0-9026-955a1d494532"}}'); break;
-            case '4': await queryBackend('create celestial {"object": {"radius": 1, "distanceFromSun": 10, "angle": 278}, "options": {}}'); break;
-            case '5': await queryBackend('create spaceship {"object": {"name": "GUH", "orbitingCelestial": true, "celestialOrbiting": "caef83aa-ca14-4bb0-9026-955a1d494532", "currentJourney": "", "velocity": 1}, "options": {}}'); break;
-            case '6': return rl.close();
+            case '4': await queryBackend('get journeys {"object": {}, "options": {"all": true }}'); break;
+            case '5': await queryBackend('create celestial {"object": {"radius": 1, "distanceFromSun": 10, "angle": 278}, "options": {}}'); break;
+            case '6': await queryBackend('create spaceship {"object": {"name": "GUH", "orbitingCelestial": true, "celestialOrbiting": "caef83aa-ca14-4bb0-9026-955a1d494532", "currentJourney": "", "velocity": 1}, "options": {}}'); break;
+            case '7': return rl.close();
         }
         askForInput();
     });

@@ -46,4 +46,23 @@ export class Celestials {
 
         return exists.length == 1;
     }
+
+    static async distanceBetweenCelestials(c1: string, c2: string): Promise<number> {
+        const celestial1 = await CelestialSchema.findOne({uuid: c1});
+        if(!celestial1) throw "Celestial does not exist";
+
+        const celestial2 = await CelestialSchema.findOne({uuid: c2});
+        if(!celestial2) throw "Celestial does not exist";
+
+        const x1 = celestial1.distanceFromSun *  Math.cos(celestial1.angle);
+        const y1 = celestial1.distanceFromSun *  Math.sin(celestial1.angle);
+
+        const x2 = celestial2.distanceFromSun *  Math.cos(celestial1.angle);
+        const y2 = celestial2.distanceFromSun *  Math.sin(celestial1.angle);
+
+        const a = x1 - x2;
+        const b = y1 - y2;
+
+        return Math.hypot(a, b);
+    }
 }

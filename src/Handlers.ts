@@ -7,7 +7,7 @@ export const getCommand = async (commandHandler: CommandHandler): Promise<Respon
     switch (commandHandler.objectType) {
         case "celestials": return await Celestials.getCelestials(commandHandler);
         case "spaceships": return await SpaceShips.getSpaceShips(commandHandler);
-        case "journey": return await Journeys.getJourneys(commandHandler);
+        case "journeys": return await Journeys.getJourneys(commandHandler);
         default: return new Response(2, "ObjectType not found");
     }
 }
@@ -16,6 +16,7 @@ export const createCommand = async (commandHandler: CommandHandler): Promise<Res
     switch (commandHandler.objectType) {
         case "celestial": return await Celestials.createCelestial(commandHandler);
         case "spaceship": return await SpaceShips.createSpaceShip(commandHandler);
+        case "journeys": return await Journeys.createNewJourney(commandHandler);
         default: return new Response(2, "ObjectType not found");
     }
 }

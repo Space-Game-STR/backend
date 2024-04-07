@@ -1,5 +1,6 @@
 import { createCommand, getCommand } from "./Handlers";
 import { ICelestial } from "./database/schemas/Celestial";
+import { IJourney } from "./database/schemas/Journey";
 import { ISpaceship } from "./database/schemas/Spaceship";
 import { DataOptions } from "./database/types";
 
@@ -29,7 +30,7 @@ export class CommandHandler {
 }
 
 class Data {
-    object: ICelestial | ISpaceship
+    object: ICelestial | ISpaceship | IJourney
     options: DataOptions
 
     constructor(string: string) {

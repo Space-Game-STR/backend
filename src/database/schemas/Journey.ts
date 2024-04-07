@@ -1,11 +1,11 @@
 import { Schema, model } from "mongoose";
 
 export interface IJourney {
-    uuid: string,
+    uuid?: string,
     spaceshipId: string,
-    start: number,
-    end: number,
-    celestialStartId: string,
+    start?: number,
+    end?: number,
+    celestialStartId?: string,
     celestialEndId: string
 }
 
