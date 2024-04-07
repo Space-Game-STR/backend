@@ -16,11 +16,13 @@ export class Journeys {
 
         return journeys;
     }
-
+    //TODO add automatic removal of journeys 
     static async removeEndedJourneys(journeys: Array<IJourney>): Promise<true> {
         const ids = journeys.map(j => j.uuid);
+        const spaceShipsIds = journeys.map(j => j.spaceshipId);
 
         await JourneySchema.deleteMany({ uuid: { $in: ids } });
+        await SpaceShipSchema.updateMany({ uuid: { $in: spaceShipsIds } }, { currentJourney: "" });
 
         return true;
     }
@@ -48,13 +50,16 @@ export class Journeys {
 
         const spaceship = await SpaceShipSchema.findOne({ uuid: newJourney.spaceshipId });
         if (!spaceship) throw "Spaceship does not exist";
+        if (spaceship.currentJourney !== "") throw "Spaceship already has a journey assigned";
+
+        if (endCelestial.uuid == spaceship.uuid) throw "Spaceship is already in target celestial";
 
         const distance = await Celestials.distanceBetweenCelestials(spaceship.celestialOrbiting, newJourney.celestialEndId);
 
         newJourney.uuid = uuidv4();
         newJourney.celestialStartId = spaceship.celestialOrbiting;
         newJourney.start = Date.now();
-        newJourney.end = Date.now() + (distance / spaceship.velocity) * 1000;
+        newJourney.end = Date.now() + ((distance / spaceship.velocity) * 1000);
 
         await JourneySchema.create(newJourney);
 
