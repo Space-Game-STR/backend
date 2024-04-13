@@ -1,6 +1,6 @@
 import { createServer } from 'net';
 import mongoose from 'mongoose';
-import { CommandHandler } from './CommandHandler';
+import { CommandHandler, Response } from './CommandHandler';
 
 const port = 7070;
 const host = '127.0.0.1';
@@ -31,8 +31,15 @@ server.on('connection', (sock) => {
             const responseString = JSON.stringify(response);
             sock.write(responseString);
         } catch (e) {
-            if (typeof e === "string") sock.write(e);
-            else console.error(e);
+            if (typeof e === "string") {
+                const error = new Response(2, e);
+                sock.write(JSON.stringify(error));
+            }
+            else {
+                console.error(e);
+                const error = new Response(2, "There's been an internal error");
+                sock.write(JSON.stringify(error));
+            }
         }
 
         sock.end();
