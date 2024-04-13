@@ -22,7 +22,7 @@ export class Celestials {
             return new Response(2, "Could not find celestials by the options/data sent.")
         }
 
-        return new Response(1, JSON.stringify(response));
+        return new Response(1, response);
     }
 
     static async createCelestial(commandHandler: CommandHandler): Promise<Response> {
@@ -38,7 +38,7 @@ export class Celestials {
 
         const celestialObject = await CelestialSchema.create(celestial);
 
-        return new Response(1, JSON.stringify(celestialObject));
+        return new Response(1, celestialObject);
     }
 
     static async exists(uuid: string): Promise<boolean> {

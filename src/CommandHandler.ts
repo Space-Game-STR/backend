@@ -39,7 +39,7 @@ class Data {
         if (!parsed.object) throw "Data doesnt contain an object field";
         if (!parsed.options) throw "Data doesnt contain an options field";
 
-        this.object = parsed.object;
+        this.object = JSON.parse(parsed.object);
         this.options = parsed.options;
     }
 }
@@ -49,9 +49,9 @@ class Data {
 export class Response {
     status: number
     statusMessage: string
-    data: string
+    data: any
 
-    constructor(status: number, data: string) {
+    constructor(status: number, data: any) {
         this.status = status;
         this.statusMessage = this.handleStatusMessage();
         this.data = data;

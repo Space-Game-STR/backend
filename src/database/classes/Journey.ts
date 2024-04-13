@@ -22,7 +22,7 @@ export class Journeys {
         const spaceShipsIds = journeys.map(j => j.spaceshipId);
 
         await JourneySchema.deleteMany({ uuid: { $in: ids } });
-        await SpaceShipSchema.updateMany({ uuid: { $in: spaceShipsIds } }, { currentJourney: "" });
+        await SpaceShipSchema.updateMany({ uuid: { $in: spaceShipsIds } }, { currentJourney: "", orbitingCelestial: true });
 
         return true;
     }
@@ -37,10 +37,11 @@ export class Journeys {
             return new Response(2, "Could not find journeys by the options/data sent.");
         }
 
-        return new Response(1, JSON.stringify(response));
+        return new Response(1, response);
     }
 
     static async createNewJourney(commandHandler: CommandHandler): Promise<Response> {
+        console.log(commandHandler.data.object);
         if (!instanceOfNewJourney(commandHandler.data.object)) throw "Data does not contain a new Journey. It has to have [spaceshipId, celestialEndId]";
 
         const newJourney = commandHandler.data.object;
@@ -64,8 +65,9 @@ export class Journeys {
         await JourneySchema.create(newJourney);
 
         spaceship.currentJourney = newJourney.uuid;
+        spaceship.orbitingCelestial = false;
         await spaceship.save();
 
-        return new Response(1, JSON.stringify(newJourney));
+        return new Response(1, newJourney);
     }
 }

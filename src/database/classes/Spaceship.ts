@@ -11,12 +11,11 @@ export class SpaceShips {
     static async getSpaceShips(commandHandler: CommandHandler): Promise<Response> {
 
         var response;
-
         if (commandHandler.data.options.all) {
-            response = await SpaceShipSchema.find({});
+            response = await SpaceShipSchema.find({ orbitingCelestial: false });
         }
         else if (commandHandler.data.options.fromPlanet && commandHandler.data.options.uuid) {
-            response = await SpaceShipSchema.find({ celestialOrbiting: commandHandler.data.options.uuid });
+            response = await SpaceShipSchema.find({ celestialOrbiting: commandHandler.data.options.uuid, orbitingCelestial: true });
         }
         else if (commandHandler.data.options.uuid) {
             response = await SpaceShipSchema.find({ uuid: commandHandler.data.options.uuid });
@@ -26,11 +25,10 @@ export class SpaceShips {
             return new Response(2, "Could not find spaceships by the options/data sent.")
         }
 
-        return new Response(1, JSON.stringify(response));
+        return new Response(1, response);
     }
 
     static async createSpaceShip(commandHandler: CommandHandler): Promise<Response> {
-
         if (!instanceOfSpaceship(commandHandler.data.object)) throw "Data does not containt a spaceship. It has to have [name, orbitingCelestial, celestialOrbiting, currentJourney, velocity]"
 
         const object = commandHandler.data.object;
@@ -50,6 +48,6 @@ export class SpaceShips {
 
         const spaceshipObject = await SpaceShipSchema.create(spaceship);
 
-        return new Response(1, JSON.stringify(spaceshipObject));
+        return new Response(1, spaceshipObject);
     }
 }
